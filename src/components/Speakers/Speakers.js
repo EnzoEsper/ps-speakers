@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import Speaker from '../Speaker/Speaker';
 import SpeakerSearchBar from '../SpeakerSearchBar/SpeakerSearchBar';
 import axios from 'axios';
@@ -64,16 +64,36 @@ const Speakers = () => {
 
   }
   
-  const [searchQuery, setSearchQuery] = useState("");
-  const [speakers, setSpeakers] = useState([]);
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case 'GET_ALL_SUCCESS':
+        return {
+          ...state,
+          status: REQUEST_STATUS.SUCCESS,
+          speakers: action.speakers
+        };
+      case 'UPDATE_STATUS':
+        return {
+          ...state,
+          status: action.status
+        };
+    }
+  };
 
+  const [searchQuery, setSearchQuery] = useState("");
+  
   const REQUEST_STATUS = {
     LOADING: "loading",
     SUCCESS: "success",
     ERROR: "error"
   };
+  
+  const [{speakers, status}, dispatch] = useReducer(reducer, {
+    status: REQUEST_STATUS.LOADING,
+    speakers: []
+  });
 
-  const [status, setStatus] = useState(REQUEST_STATUS.LOADING);
+  // const [status, setStatus] = useState(REQUEST_STATUS.LOADING);
   const [error, setError] = useState({});
 
   useEffect(() => {
@@ -81,10 +101,21 @@ const Speakers = () => {
     const fetchData = async() => {
       try {
         const response = await axios.get("http://localhost:4000/speakers");
-        setSpeakers(response.data);
-        setStatus(REQUEST_STATUS.SUCCESS);
+        dispatch({
+          speakers: response.data,
+          type: "GET_ALL_SUCCESS"
+        });
+        // setStatus(REQUEST_STATUS.SUCCESS);
+        // dispatch({
+        //   status: REQUEST_STATUS.SUCCESS,
+        //   type: "UPDATE_STATUS"
+        // });
       } catch (error) {
-        setStatus(REQUEST_STATUS.ERROR);
+        // setStatus(REQUEST_STATUS.ERROR);
+        dispatch({
+          status: REQUEST_STATUS.ERROR,
+          type: "UPDATE_STATUS"
+        });
         setError(error);
       }
     }
