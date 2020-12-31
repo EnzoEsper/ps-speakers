@@ -7,6 +7,8 @@ import requestReducer, { REQUEST_STATUS } from '../../reducers/request';
 
 import { GET_ALL_FAILURE, GET_ALL_SUCCESS, PUT_FAILURE, PUT_SUCCESS } from '../../actions/request';
 
+import withRequest from '../../HOCs/withRequest';
+
 const Speakers = () => {
   // const speakersArray = [
   //   {
@@ -147,7 +149,7 @@ const Speakers = () => {
   );
 };
 
-export default Speakers;
+export default withRequest()(Speakers);
 
 
 // *************************
