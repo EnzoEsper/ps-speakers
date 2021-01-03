@@ -1,15 +1,12 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useState } from 'react';
 import Speaker from '../Speaker/Speaker';
 import SpeakerSearchBar from '../SpeakerSearchBar/SpeakerSearchBar';
-import axios from 'axios';
 
-import requestReducer, { REQUEST_STATUS } from '../../reducers/request';
-
-import { GET_ALL_FAILURE, GET_ALL_SUCCESS, PUT_FAILURE, PUT_SUCCESS } from '../../actions/request';
+import { REQUEST_STATUS } from '../../reducers/request';
 
 import withRequest from '../../HOCs/withRequest';
 
-const Speakers = () => {
+const Speakers = ({ records: speakers, status, error, put }) => {
   // const speakersArray = [
   //   {
   //     imageSrc: 'speaker-component-1124',
@@ -48,74 +45,17 @@ const Speakers = () => {
   //       'Eugene Chuvyrov is  a Senior Cloud Architect at Microsoft. He works directly with both startups and enterprises to enable their solutions in Microsoft cloud, and to make Azure better as a result of this work with partners.',
   //   },
   // ];
-
-  function toggleSpeakerFavorite(speakerRec) {
-    return {
-      ...speakerRec,
-      isFavorite: !speakerRec.isFavorite
-    };
-  }
-
   const onFavoriteToggleHandler = async (speakerRec) => {
-    try {
-      const toggledSpeakerRec = {
-        ...speakerRec,
-        isFavorite: !speakerRec.isFavorite,
-      };
-      await axios.put(
-        `http://localhost:4000/speakers/${speakerRec.id}`,
-        toggledSpeakerRec,
-      );
-      dispatch({
-        type: PUT_SUCCESS,
-        record: toggledSpeakerRec,
-      });
-    } catch (e) {
-      dispatch({
-        type: PUT_FAILURE,
-        error: e,
-      });
-    }
+    put({
+      ...speakerRec,
+      isFavourite: !speakerRec.isFavorite
+    });
   };
   
   const [searchQuery, setSearchQuery] = useState("");  
-  
-  const [{ records: speakers, status, error }, dispatch] = useReducer(requestReducer, {
-    records: [],
-    status: REQUEST_STATUS.LOADING,
-    error: null
-  });
 
   // const [status, setStatus] = useState(REQUEST_STATUS.LOADING);
   // const [error, setError] = useState({});
-
-  useEffect(() => {
-    
-    const fetchData = async() => {
-      try {
-        const response = await axios.get("http://localhost:4000/speakers");
-        dispatch({
-          type: GET_ALL_SUCCESS,
-          records: response.data
-        });
-        // setStatus(REQUEST_STATUS.SUCCESS);
-        // dispatch({
-        //   status: REQUEST_STATUS.SUCCESS,
-        //   type: "UPDATE_STATUS"
-        // });
-      } catch (error) {
-        // setStatus(REQUEST_STATUS.ERROR);
-        console.log('Loading data error', e);
-        dispatch({
-          type: GET_ALL_FAILURE,
-          error: error
-        });
-        // setError(error);
-      }
-    }
-
-    fetchData();
-  }, []);
 
   const success = status === REQUEST_STATUS.SUCCESS;
   const isLoading = status === REQUEST_STATUS.LOADING;
@@ -149,7 +89,7 @@ const Speakers = () => {
   );
 };
 
-export default withRequest()(Speakers);
+export default withRequest('http://localhost:4000', 'speakers')(Speakers);
 
 
 // *************************
