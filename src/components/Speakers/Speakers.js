@@ -5,8 +5,10 @@ import SpeakerSearchBar from '../SpeakerSearchBar/SpeakerSearchBar';
 import { REQUEST_STATUS } from '../../reducers/request';
 
 import withRequest from '../../HOCs/withRequest';
+import withSpecialMessage from '../../HOCs/withSpecialMessage';
+import { compose } from 'recompose';
 
-const Speakers = ({ records: speakers, status, error, put, bgColor }) => {
+const Speakers = ({ records: speakers, status, error, put, bgColor, specialMessage }) => {
   // const speakersArray = [
   //   {
   //     imageSrc: 'speaker-component-1124',
@@ -65,6 +67,13 @@ const Speakers = ({ records: speakers, status, error, put, bgColor }) => {
     <div className={bgColor}>
       <SpeakerSearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
+      {specialMessage && specialMessage.length > 0 && (
+        <div className='bg-orange-100 border-l-8 border-orange-500 text-orange-700 p-4' role='alert'>
+          <p className='font-bold'>Special Message</p>
+          <p>{specialMessage}</p>
+        </div>
+      )}
+
       {isLoading && <div>Loading...</div>}
 
       {hasErrored && (
@@ -89,7 +98,10 @@ const Speakers = ({ records: speakers, status, error, put, bgColor }) => {
   );
 };
 
-export default withRequest('http://localhost:4000', 'speakers')(Speakers);
+export default compose(
+  withRequest('http://localhost:4000', 'speakers'),
+  withSpecialMessage()
+)(Speakers);
 
 
 // *************************
