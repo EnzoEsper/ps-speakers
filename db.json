@@ -7,7 +7,8 @@
       "sat": false,
       "sun": true,
       "isFavorite": false,
-      "bio": "Tammy has held a number of executive and management roles over the past 15 years, including VP engineering Roles at Molekule Inc., Cantaloupe Systems, E-Color, and Untangle Inc."
+      "bio": "Tammy has held a number of executive and management roles over the past 15 years, including VP engineering Roles at Molekule Inc., Cantaloupe Systems, E-Color, and Untangle Inc.",
+      "isFavourite": true
     },
     {
       "id": 5996,
@@ -16,7 +17,8 @@
       "isFavorite": true,
       "bio": "Craig has a passion for community and helping other developers improve their skills. He writes the column \"Software Gardening\" in DotNet Curry Magazine and is the co-author of \"Continuous Integration in .NET\" available from Manning.",
       "sat": true,
-      "sun": true
+      "sun": true,
+      "isFavourite": false
     },
     {
       "id": 10803,
@@ -34,7 +36,8 @@
       "sat": true,
       "sun": false,
       "isFavorite": false,
-      "bio": "Douglas Crockford discovered the JSON Data Interchange Format. He is also the author of _JavaScript: The Good Parts_. He has been called a guru, but he is actually more of a mahatma."
+      "bio": "Douglas Crockford discovered the JSON Data Interchange Format. He is also the author of _JavaScript: The Good Parts_. He has been called a guru, but he is actually more of a mahatma.",
+      "isFavourite": true
     },
     {
       "id": 41808,
@@ -43,7 +46,8 @@
       "sat": true,
       "sun": true,
       "isFavorite": true,
-      "bio": "Paul is the PyCharm and WebStorm Developer Advocate at JetBrains. Before that, Paul was a partner at Agendaless Consulting and co-founder of Zope Corporation, taking the first open source application server through $14M of funding."
+      "bio": "Paul is the PyCharm and WebStorm Developer Advocate at JetBrains. Before that, Paul was a partner at Agendaless Consulting and co-founder of Zope Corporation, taking the first open source application server through $14M of funding.",
+      "isFavourite": false
     },
     {
       "id": 1269,

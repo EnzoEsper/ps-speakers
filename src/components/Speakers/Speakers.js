@@ -6,15 +6,12 @@ import { DataProvider, DataContext } from '../../contexts/DataContext';
 
 import { REQUEST_STATUS } from '../../reducers/request';
 
-import withRequest from '../HOCs/withRequest';
-import withSpecialMessage from '../HOCs/withSpecialMessage';
-import { compose } from 'recompose';
 
 const SpeakersComponent = ({ bgColor }) => {
   
   const specialMessage = '';
 
-  const { speakers, status } = useContext(DataContext);
+  const { records: speakers, status, error, put } = useContext(DataContext);
 
   const onFavoriteToggleHandler = async (speakerRec) => {
     put({
@@ -69,7 +66,7 @@ const SpeakersComponent = ({ bgColor }) => {
 
 const Speakers = (props) => {
   return(
-    <DataProvider>
+    <DataProvider baseUrl="http://localhost:4000" routeName="speakers">
       <SpeakersComponent {...props}></SpeakersComponent>
     </DataProvider>
   )
