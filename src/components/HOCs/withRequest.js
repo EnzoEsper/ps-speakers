@@ -1,13 +1,13 @@
 import React, { useEffect, useReducer } from 'react';
 import axios from 'axios';
-import requestReducer, { REQUEST_STATUS } from '../reducers/request';
+import requestReducer, { REQUEST_STATUS } from '../../reducers/request';
 
 import {
   PUT_SUCCESS,
   PUT_FAILURE,
   GET_ALL_SUCCESS,
   GET_ALL_FAILURE
-} from '../actions/request';
+} from '../../actions/request';
 
 const withRequest = (baseUrl, routeName) => (Component) => (props) => {
 
